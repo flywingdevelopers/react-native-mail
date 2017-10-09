@@ -36,11 +36,11 @@ RCT_EXPORT_METHOD(mail:(NSDictionary *)options
             NSString *subject = [RCTConvert NSString:options[@"subject"]];
             [mail setSubject:subject];
         }
-        
+
         bool *isHTML = NO;
-        
+
         if (options[@"isHTML"]){
-            isHTML = [options[@"isHTML"] boolValue];
+            isHTML = YES;
         }
 
         if (options[@"body"]){
@@ -57,58 +57,103 @@ RCT_EXPORT_METHOD(mail:(NSDictionary *)options
             NSArray *ccRecipients = [RCTConvert NSArray:options[@"ccRecipients"]];
             [mail setCcRecipients:ccRecipients];
         }
-        
+
         if (options[@"bccRecipients"]){
             NSArray *bccRecipients = [RCTConvert NSArray:options[@"bccRecipients"]];
             [mail setBccRecipients:bccRecipients];
         }
 
-        if (options[@"attachment"] && options[@"attachment"][@"path"] && options[@"attachment"][@"type"]){
-            NSString *attachmentPath = [RCTConvert NSString:options[@"attachment"][@"path"]];
-            NSString *attachmentType = [RCTConvert NSString:options[@"attachment"][@"type"]];
-            NSString *attachmentName = [RCTConvert NSString:options[@"attachment"][@"name"]];
+        // if (options[@"attachment"] && options[@"attachment"][@"path"] && options[@"attachment"][@"type"]){
+            // NSString *attachmentPath = [RCTConvert NSString:options[@"attachment"][@"path"]];
+            // NSString *attachmentType = [RCTConvert NSString:options[@"attachment"][@"type"]];
+            // NSString *attachmentName = [RCTConvert NSString:options[@"attachment"][@"name"]];
 
             // Set default filename if not specificed
-            if (!attachmentName) {
-                attachmentName = [[attachmentPath lastPathComponent] stringByDeletingPathExtension];
-            }
+            // if (!attachmentName) {
+                // attachmentName = [[attachmentPath lastPathComponent] stringByDeletingPathExtension];
+            // }
 
             // Get the resource path and read the file using NSData
-            NSData *fileData = [NSData dataWithContentsOfFile:attachmentPath];
+            // NSData *fileData = [NSData dataWithContentsOfFile:attachmentPath];
 
             // Determine the MIME type
-            NSString *mimeType;
-            
+            // NSString *mimeType;
+
             /*
              * Add additional mime types and PR if necessary. Find the list
              * of supported formats at http://www.iana.org/assignments/media-types/media-types.xhtml
              */
-            if ([attachmentType isEqualToString:@"jpg"]) {
-                mimeType = @"image/jpeg";
-            } else if ([attachmentType isEqualToString:@"png"]) {
-                mimeType = @"image/png";
-            } else if ([attachmentType isEqualToString:@"doc"]) {
-                mimeType = @"application/msword";
-            } else if ([attachmentType isEqualToString:@"ppt"]) {
-                mimeType = @"application/vnd.ms-powerpoint";
-            } else if ([attachmentType isEqualToString:@"html"]) {
-                mimeType = @"text/html";
-            } else if ([attachmentType isEqualToString:@"csv"]) {
-                mimeType = @"text/csv";
-            } else if ([attachmentType isEqualToString:@"pdf"]) {
-                mimeType = @"application/pdf";
-            } else if ([attachmentType isEqualToString:@"vcard"]) {
-                mimeType = @"text/vcard";
-            } else if ([attachmentType isEqualToString:@"json"]) {
-                mimeType = @"application/json";
-            } else if ([attachmentType isEqualToString:@"zip"]) {
-                mimeType = @"application/zip";
-            } else if ([attachmentType isEqualToString:@"text"]) {
-                mimeType = @"text/*";
-            }
+            // if ([attachmentType isEqualToString:@"jpg"]) {
+                // mimeType = @"image/jpeg";
+            // } else if ([attachmentType isEqualToString:@"png"]) {
+                // mimeType = @"image/png";
+            // } else if ([attachmentType isEqualToString:@"doc"]) {
+                // mimeType = @"application/msword";
+            // } else if ([attachmentType isEqualToString:@"ppt"]) {
+                // mimeType = @"application/vnd.ms-powerpoint";
+            // } else if ([attachmentType isEqualToString:@"html"]) {
+                // mimeType = @"text/html";
+            // } else if ([attachmentType isEqualToString:@"csv"]) {
+                // mimeType = @"text/csv";
+            // } else if ([attachmentType isEqualToString:@"pdf"]) {
+                // mimeType = @"application/pdf";
+            // } else if ([attachmentType isEqualToString:@"vcard"]) {
+                // mimeType = @"text/vcard";
+            // } else if ([attachmentType isEqualToString:@"json"]) {
+                // mimeType = @"application/json";
+            // } else if ([attachmentType isEqualToString:@"zip"]) {
+                // mimeType = @"application/zip";
+            // } else if ([attachmentType isEqualToString:@"text"]) {
+                // mimeType = @"text/*";
+            // }
 
             // Add attachment
-            [mail addAttachmentData:fileData mimeType:mimeType fileName:attachmentName];
+            // [mail addAttachmentData:fileData mimeType:mimeType fileName:attachmentName];
+        // }
+
+        if (options[@"attachment"]){
+            NSArray *attachments = [RCTConvert NSArray:options[@"attachment"]];
+
+      			for(NSDictionary *attachment in attachments){
+      				NSString *path = [RCTConvert NSString:attachment[@"path"]];
+      				NSString *type = [RCTConvert NSString:attachment[@"type"]];
+      				NSString *name = [RCTConvert NSString:attachment[@"name"]];
+
+      				if (name == nil){
+      					name = [[path lastPathComponent] stringByDeletingPathExtension];
+      				}
+      				// Get the resource path and read the file using NSData
+      				NSData *fileData = [NSData dataWithContentsOfFile:path];
+
+      				// Determine the MIME type
+      				NSString *mimeType = @"image/png";
+              if ([attachmentType isEqualToString:@"jpg"]) {
+                  mimeType = @"image/jpeg";
+              } else if ([attachmentType isEqualToString:@"png"]) {
+                  mimeType = @"image/png";
+              } else if ([attachmentType isEqualToString:@"doc"]) {
+                  mimeType = @"application/msword";
+              } else if ([attachmentType isEqualToString:@"ppt"]) {
+                  mimeType = @"application/vnd.ms-powerpoint";
+              } else if ([attachmentType isEqualToString:@"html"]) {
+                  mimeType = @"text/html";
+              } else if ([attachmentType isEqualToString:@"csv"]) {
+                  mimeType = @"text/csv";
+              } else if ([attachmentType isEqualToString:@"pdf"]) {
+                  mimeType = @"application/pdf";
+              } else if ([attachmentType isEqualToString:@"vcard"]) {
+                  mimeType = @"text/vcard";
+              } else if ([attachmentType isEqualToString:@"json"]) {
+                  mimeType = @"application/json";
+              } else if ([attachmentType isEqualToString:@"zip"]) {
+                  mimeType = @"application/zip";
+              } else if ([attachmentType isEqualToString:@"text"]) {
+                  mimeType = @"text/*";
+              }
+
+              // Add attachment
+      				[mail addAttachmentData:fileData mimeType:mimeType fileName:name];
+      			}
         }
 
         UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
