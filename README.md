@@ -5,6 +5,11 @@ Supports emails with attachments.
 
 ## Installation
 
+```bash
+npm install https://github.com/flywingdevelopers/react-native-mail.git
+```
+
+## Original Installation
 There was a breaking change in RN >=40. So for React Native >= 0.40: use v3.x and higher of this lib. otherwise use v2.x
 
 ```bash
