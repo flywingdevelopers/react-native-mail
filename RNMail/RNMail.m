@@ -127,27 +127,27 @@ RCT_EXPORT_METHOD(mail:(NSDictionary *)options
 
       				// Determine the MIME type
       				NSString *mimeType = @"image/png";
-              if ([attachmentType isEqualToString:@"jpg"]) {
+              if ([type isEqualToString:@"jpg"]) {
                   mimeType = @"image/jpeg";
-              } else if ([attachmentType isEqualToString:@"png"]) {
+              } else if ([type isEqualToString:@"png"]) {
                   mimeType = @"image/png";
-              } else if ([attachmentType isEqualToString:@"doc"]) {
+              } else if ([type isEqualToString:@"doc"]) {
                   mimeType = @"application/msword";
-              } else if ([attachmentType isEqualToString:@"ppt"]) {
+              } else if ([type isEqualToString:@"ppt"]) {
                   mimeType = @"application/vnd.ms-powerpoint";
-              } else if ([attachmentType isEqualToString:@"html"]) {
+              } else if ([type isEqualToString:@"html"]) {
                   mimeType = @"text/html";
-              } else if ([attachmentType isEqualToString:@"csv"]) {
+              } else if ([type isEqualToString:@"csv"]) {
                   mimeType = @"text/csv";
-              } else if ([attachmentType isEqualToString:@"pdf"]) {
+              } else if ([type isEqualToString:@"pdf"]) {
                   mimeType = @"application/pdf";
-              } else if ([attachmentType isEqualToString:@"vcard"]) {
+              } else if ([type isEqualToString:@"vcard"]) {
                   mimeType = @"text/vcard";
-              } else if ([attachmentType isEqualToString:@"json"]) {
+              } else if ([type isEqualToString:@"json"]) {
                   mimeType = @"application/json";
-              } else if ([attachmentType isEqualToString:@"zip"]) {
+              } else if ([type isEqualToString:@"zip"]) {
                   mimeType = @"application/zip";
-              } else if ([attachmentType isEqualToString:@"text"]) {
+              } else if ([type isEqualToString:@"text"]) {
                   mimeType = @"text/*";
               }
 
